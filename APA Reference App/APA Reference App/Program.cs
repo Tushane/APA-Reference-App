@@ -6,17 +6,26 @@ using System.Windows.Forms;
 
 namespace APA_Reference_App
 {
-    static class Program
+   public static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+
+        private static MainScreen main = null;
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainScreen());
+            main = new MainScreen();
+            Application.Run(main);
+        }
+
+        public static MainScreen GetMain()
+        {
+            return main;
         }
     }
 }

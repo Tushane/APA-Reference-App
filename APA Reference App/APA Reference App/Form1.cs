@@ -17,6 +17,7 @@ namespace APA_Reference_App
         public MainScreen()
         {
             InitializeComponent();
+           
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
@@ -28,15 +29,24 @@ namespace APA_Reference_App
 
         private void button1_Click(object sender, EventArgs e)
         {
-           outbox.Text = _connection.GetWebData();
+            try
+            {
+                _connection.GetNewWebData();
+
+            } catch(NullReferenceException ez)
+            {
+                outbox.Text = ez.ToString();//returning the error message in the outbox section
+            }
         }
 
+        //the event for the copy button that handles the copying
         private void copybutton_Click(object sender, EventArgs e)
         {
             Clipboard.SetData(DataFormats.Text,outbox.Text);
             clearConnectToNet();
         }
 
+        //the method that handles the clear of both terminals
         private void clearbutton_Click(object sender, EventArgs e)
         {
             richTextBox1.Text = string.Empty;
@@ -47,6 +57,11 @@ namespace APA_Reference_App
         private void clearConnectToNet()
         {
             _connection = null;
+        }
+
+        public void SetOutput(string data)
+        {
+          outbox.Text = data;
         }
     }
 }
