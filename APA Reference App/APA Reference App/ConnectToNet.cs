@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace APA_Reference_App
@@ -17,18 +18,27 @@ namespace APA_Reference_App
        
         private string url;
         private string _dataRecieved;
-        
+        private MainScreen c;
         //defualt constructor 
         public ConnectToNet()
         {
             url = null;
             _dataRecieved = null;
+            c = Program.GetMain(); //getting the current instance of the main screen that was created
+
         }
 
         //an Setter which set the url
         public void SetUrl(string temp_url)
         {
-            url = temp_url;
+            if (temp_url.StartsWith("https://") || temp_url.StartsWith("http://"))
+            {
+                url = temp_url;
+            }
+            else
+            {
+                c.SetOutput("Please Check your url format it.");
+            }
         }
 
         //an getter to reference the url from outside this script if neeeded
@@ -78,16 +88,19 @@ namespace APA_Reference_App
         }
 
         
-
+        //another to get data from a website 
         public async Task GetNewWebData()
         {
-            MainScreen c = Program.GetMain(); //getting the current instance of the main screen that was created
+            
             try
             {
+                c.SetOutput("Getting Data..");
                 HttpClient _client = new HttpClient();
-
+                c.SetOutput("Getting Data....");
                 Uri _uri = new Uri(Uri.EscapeUriString(url));
+                c.SetOutput("Getting Data.........");
                 string datagathered = await _client.GetStringAsync(_uri);
+                c.SetOutput("Completing Data Collection........");
                 _client.CancelPendingRequests();
                // Console.WriteLine(datagathered);
 
@@ -98,6 +111,40 @@ namespace APA_Reference_App
             {
                 c.SetOutput(e.Message);
             }
+        }
+
+        //another to get data from a website
+        public async Task NewGetWebDatam()
+        {
+
+            try
+            {
+                HttpWebRequest newRequest = (HttpWebRequest)WebRequest.Create(url);
+                c.SetOutput("Requesting....");
+                Thread.Sleep(500);
+                c.SetOutput("Requesting..........");
+                HttpWebResponse newResponse = (HttpWebResponse)newRequest.GetResponse();
+                c.SetOutput("Getting Response....");
+                Thread.Sleep(500);
+                c.SetOutput("Getting Response..........");
+                Stream NewStream = newResponse.GetResponseStream();
+                c.SetOutput("Encoding Response....");
+                Thread.Sleep(500);
+                c.SetOutput("Encoding Response..........");
+                StreamReader NewReadere = new StreamReader(NewStream);
+                c.SetOutput("Finalizing Response....");
+                Thread.Sleep(500);
+                c.SetOutput("Finalizing Response..........");
+                string complete = NewReadere.ReadToEnd();
+                Console.WriteLine(complete);
+                c.SetOutput(complete);
+
+            }
+            catch(WebException e)
+            {
+                c.SetOutput(e.Message);
+            }
+
         }
 
     }

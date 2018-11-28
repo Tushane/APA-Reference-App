@@ -31,7 +31,7 @@ namespace APA_Reference_App
         {
             try
             {
-                _connection.GetNewWebData();
+                _connection.NewGetWebDatam();
 
             } catch(NullReferenceException ez)
             {
