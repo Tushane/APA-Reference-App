@@ -41,8 +41,9 @@ namespace APA_Reference_App
                 {
 
                     statusbar.Value = 0;
-                    Thread.Sleep(10);
                     TrackProgress(10);
+                    this.SetState("Process Starting");
+                    Thread.Sleep(100);
 
                 }
                 else

@@ -121,11 +121,12 @@ namespace APA_Reference_App
             {
                 HttpWebRequest newRequest = (HttpWebRequest)WebRequest.Create(url);
                 c.SetState("Requesting Response");
-                c.TrackProgress(10);
+                c.TrackProgress(100);
                 Console.WriteLine("Requesting....");
                 HttpWebResponse newResponse = (HttpWebResponse)newRequest.GetResponse();
                 c.TrackProgress(10);
                 c.SetState("Receving a Response");
+                Thread.Sleep(100);
                 Console.WriteLine("Getting Response....");
                 Thread.Sleep(100);
                 Stream NewStream = newResponse.GetResponseStream();
