@@ -116,34 +116,37 @@ namespace APA_Reference_App
         //another to get data from a website
         public async Task NewGetWebDatam()
         {
-
+            c.ComponentState(false);
             try
             {
                 HttpWebRequest newRequest = (HttpWebRequest)WebRequest.Create(url);
-                c.SetOutput("Requesting....");
+                Console.WriteLine("Requesting....");
                 Thread.Sleep(500);
-                c.SetOutput("Requesting..........");
+                Console.WriteLine("Requesting..........");
                 HttpWebResponse newResponse = (HttpWebResponse)newRequest.GetResponse();
-                c.SetOutput("Getting Response....");
+                Console.WriteLine("Getting Response....");
                 Thread.Sleep(500);
-                c.SetOutput("Getting Response..........");
+                Console.WriteLine("Getting Response..........");
                 Stream NewStream = newResponse.GetResponseStream();
-                c.SetOutput("Encoding Response....");
+                Console.WriteLine("Encoding Response....");
                 Thread.Sleep(500);
-                c.SetOutput("Encoding Response..........");
-                StreamReader NewReadere = new StreamReader(NewStream);
-                c.SetOutput("Finalizing Response....");
+                Console.WriteLine("Encoding Response..........");
+                StreamReader NewReader = new StreamReader(NewStream);
+                Console.WriteLine("Finalizing Response....");
                 Thread.Sleep(500);
-                c.SetOutput("Finalizing Response..........");
-                string complete = NewReadere.ReadToEnd();
-                Console.WriteLine(complete);
-                c.SetOutput(complete);
-
+                Console.WriteLine("Finalizing Response..........");
+                _dataRecieved = await NewReader.ReadToEndAsync();
+                /*NewReader.Close();
+                NewStream.Close();
+                newResponse.Close();*/
+                c.SetOutput(_dataRecieved);
+                
             }
             catch(WebException e)
             {
                 c.SetOutput(e.Message);
             }
+            c.ComponentState(true);
 
         }
 
