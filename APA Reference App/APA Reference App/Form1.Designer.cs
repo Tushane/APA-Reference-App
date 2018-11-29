@@ -40,7 +40,7 @@
             this.urlBox = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.statusbar = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -184,7 +184,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(134)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.panel2.Controls.Add(this.label4);
-            this.panel2.Controls.Add(this.progressBar1);
+            this.panel2.Controls.Add(this.statusbar);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(1, 557);
             this.panel2.Name = "panel2";
@@ -197,22 +197,21 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(165, 6);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(123, 24);
+            this.label4.Size = new System.Drawing.Size(0, 24);
             this.label4.TabIndex = 13;
-            this.label4.Text = "RTF N3RDS";
             // 
-            // progressBar1
+            // statusbar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(3, 4);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(156, 25);
-            this.progressBar1.TabIndex = 12;
+            this.statusbar.Location = new System.Drawing.Point(3, 4);
+            this.statusbar.Name = "statusbar";
+            this.statusbar.Size = new System.Drawing.Size(156, 25);
+            this.statusbar.TabIndex = 12;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(417, 5);
+            this.label1.Location = new System.Drawing.Point(764, 6);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(123, 24);
             this.label1.TabIndex = 11;
@@ -261,8 +260,8 @@
         private System.Windows.Forms.TextBox urlBox;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Label label4;
+        protected System.Windows.Forms.ProgressBar statusbar;
+        protected System.Windows.Forms.Label label4;
     }
 }
 

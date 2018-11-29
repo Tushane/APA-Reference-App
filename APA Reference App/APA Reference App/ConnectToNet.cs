@@ -120,26 +120,32 @@ namespace APA_Reference_App
             try
             {
                 HttpWebRequest newRequest = (HttpWebRequest)WebRequest.Create(url);
+                c.SetState("Requesting Response");
+                c.TrackProgress(10);
                 Console.WriteLine("Requesting....");
-                Thread.Sleep(500);
-                Console.WriteLine("Requesting..........");
                 HttpWebResponse newResponse = (HttpWebResponse)newRequest.GetResponse();
+                c.TrackProgress(10);
+                c.SetState("Receving a Response");
                 Console.WriteLine("Getting Response....");
-                Thread.Sleep(500);
-                Console.WriteLine("Getting Response..........");
+                Thread.Sleep(100);
                 Stream NewStream = newResponse.GetResponseStream();
+                c.TrackProgress(20);
+                c.SetState("Encoding the Response");
                 Console.WriteLine("Encoding Response....");
-                Thread.Sleep(500);
-                Console.WriteLine("Encoding Response..........");
+                Thread.Sleep(100);
                 StreamReader NewReader = new StreamReader(NewStream);
+                c.TrackProgress(10);
+                c.SetState("Finalizing the Response");
                 Console.WriteLine("Finalizing Response....");
-                Thread.Sleep(500);
-                Console.WriteLine("Finalizing Response..........");
                 _dataRecieved = await NewReader.ReadToEndAsync();
+                c.TrackProgress(20);
+                Thread.Sleep(100);
                 /*NewReader.Close();
                 NewStream.Close();
                 newResponse.Close();*/
                 c.SetOutput(_dataRecieved);
+                c.TrackProgress(20);
+                c.SetState("Complete");
                 
             }
             catch(WebException e)

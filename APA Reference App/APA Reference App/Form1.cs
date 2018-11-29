@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -23,6 +24,7 @@ namespace APA_Reference_App
            
         }
 
+        //checking and setting the url input 
         private void urlBox_TextChanged(object sender, EventArgs e)
         {
             _connection = new ConnectToNet();
@@ -30,13 +32,26 @@ namespace APA_Reference_App
            
         }
 
+        //handles the clicking of the GetData Button
         private async void button1_ClickAsync(object sender, EventArgs e)
         {
             try
             {
-               await _connection.NewGetWebDatam();
+                if (statusbar.Value > 0)
+                {
 
-            } catch(NullReferenceException ez)
+                    statusbar.Value = 0;
+                    Thread.Sleep(10);
+                    TrackProgress(10);
+
+                }
+                else
+                {
+                    TrackProgress(10);
+                }
+                    await _connection.NewGetWebDatam();
+
+                } catch(NullReferenceException ez)
             {
                 outbox.Text = ez.ToString();//returning the error message in the outbox section
             }
@@ -54,6 +69,7 @@ namespace APA_Reference_App
         {
             urlBox.Text = string.Empty;
             outbox.Text = string.Empty;
+            statusbar.Value = 0;
             clearConnectToNet();
         }
 
@@ -77,16 +93,19 @@ namespace APA_Reference_App
             urlBox.Enabled = temp;
         }
 
+        //handles the closing of the application
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        //handles the minimization of the application
         private void minimaze_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
+        #region The Code that Handles the moving of the application
         private void Panel1_MouseDown(object sender, MouseEventArgs e)
         {
             if (!moving)
@@ -109,6 +128,19 @@ namespace APA_Reference_App
         private void Panel1_MouseUp(object sender, MouseEventArgs e)
         {
             moving = false;
+        }
+        #endregion
+
+        //function that handles the tracking of the formating progress
+        public void TrackProgress(int currentProgress)
+        {
+            statusbar.Increment(currentProgress);
+        }
+
+        //function that state where the progress is at
+        public async void SetState(string state)
+        {
+            label4.Text = state;
         }
     }
 }
